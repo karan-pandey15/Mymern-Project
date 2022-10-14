@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+
+</head>
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container{
+    width: 100%;
+    height: 100vh;
+    background: #141a34;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container form{
+    width: 90%;
+    max-width: 500px;
+    padding: 50px 30px 20px ;
+    background: #fff;
+    border-radius:5px ;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    position: relative;
+
+}
+.fa-paper-plane{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    font-size: 25px;
+    padding: 20px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px black;
+}
+.input-group{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    position: relative;
+
+}
+.input-group label{
+    flex-basis: 28%;
+}
+.input-group, .input-group textarea{
+    flex-basis: 70%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 10px 0;
+    border-bottom: 1px solid #999;
+    color: #333;
+    font-size: 16px;
+}
+::placeholder{
+    font-size: 14px;
+}
+.btnReg{
+    background: #141a34;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100px;
+    border:  1px solid rgba(255,255,255,0.7);
+    outline:none;
+    cursor: pointer;
+    display: block;
+    margin: 30px auto 10px;
+}
+
+input{
+    border: none;
+    outline: none;
+}
+.input-group span
+{
+    position: absolute;
+    bottom: 12px;
+    right: 17px;
+    font-size: 14px;
+    color: red;
+
+}
+#submit-error{
+    color: red;
+
+}
+.fa-check-circle{
+    background: white;
+    color: green;
+}
+#subit-error{
+    color: red;
+}
+
+</style>
+<body>
+    {{>navbar}}
+  <div class="container">
+    <form action="/register" method="post">
+        <div class="name-section">
+      <i class="fas fa-paper-plane"></i>
+      <div class="input-group">
+        <label>Full Name :</label>
+        <input type="text" placeholder="Enter your name" id="contact-name" onkeyup="validatename()" type="submit" name="name">
+    </div>
+    <span id="name-error" ></span>
+      </div>
+        <div class="name-section">
+      <i class="fas fa-paper-plane"></i>
+
+      <div class="input-group">
+        <label>Company Name :</label>
+        <input type="text" placeholder="Enter your name" id="contact-name" onkeyup="validatename()" type="submit" name="CompanyName">
+        
+    </div>
+    <span id="name-error" ></span>
+      </div>
+      
+      <div class="input-group">
+        <label>Phone No :</label>
+        <input type="tel" placeholder="123 456 7890" id="contact-phone" onkeyup="validatephone()" name="phone" type="submit">
+        <span id="phone-error" ></span>
+        
+      </div>
+
+      <div class="input-group">
+        <label>Email Id :</label>
+        <input type="email" placeholder="Enter Email"id="contact-email" onkeyup="validateemail()" name="email" type="submit">
+        <span id="email-error" ></span>
+        
+      </div>   
+
+      <div class="input-group">
+        <label>Your Message :</label>
+        <textarea rows="5" placeholder="Enter your message"></textarea id="message-error onkeyup="validatemessage()">
+        <span id="contact-message"></span>
+
+      </div>
+        {{!-- <button type="submit" value="register" onclick="return validateform()">Submit</button> --}}
+
+        <input type="submit" value="Submit" class="btnReg">
+        
+
+   <span id="subit-error" ></span>
+  </form>
+
+
+  </div>
+
+
+
+  <script>
+    var nameError = document.getElementById('name-error')            
+    var phoneError = document.getElementById('phone-error')
+    var messageError = document.getElementById('message-error')
+    var emailError = document.getElementById('email-error')
+    var submitError = document.getElementById('subit-error')
+
+    function validatename()
+    {
+        var name = document.getElementById('contact-name').value;
+        if(name.length== 0)
+        {
+            nameError.innerHTML = "Name is required"
+            return false;
+        }
+        
+        if(!name.match(/^[A-Za-z]\._\-[0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/))
+        // {
+        //     nameError.innerHTML  = "Write Full name"
+        //     return false;
+        // }
+       nameError.innerHTML = '<i class="fas fa-check-circle" ></i>'
+            return true;
+
+        }
+
+        // phoneError code start here
+
+        function validatephone(){
+        
+        var phone = document.getElementById('contact-phone').value;
+        if(phone.length== 0 || phone.length<=9)
+        {
+            phoneError.innerHTML = "phone number is required"
+            return false;
+        }
+        
+        if(phone.length!==10)
+        {
+            phoneError.innerHTML  = "number is missing"
+            return false;
+        }
+
+        if(!phone.match(/^[0-9]{10}$/))
+        {
+            phoneError.innerHTML  = "only digit please"
+            return false;
+        }
+        phoneError.innerHTML = '<i class="fas fa-check-circle" ></i>'
+            return true;
+        }
+
+        // emailError code start here
+
+        function validateemail(){
+        
+        var email = document.getElementById('contact-email').value;
+        if(email.length== 0)
+        {
+            email.innerHTML = "E-mail is required"
+            return false;
+        }
+        if(!email.match(/^[A-Za-z]*[0-9]*@[A-Za-z]*.com*$/))
+        {
+            emailError.innerHTML  = "wrong email"
+            return false;
+        }
+        emailError.innerHTML = '<i class="fas fa-check-circle" ></i>'
+            return true;
+        }
+        
+        function validatemessage(){
+
+        var message = document.getElementById('contact-message').value;
+        var required = 30;
+        var left = required-message.left;
+        
+        // if(message.length==0){
+        //     messageError.innerHTML = "message is required"
+        // }
+
+
+        if(left>0){
+        messageError.innerHTML = "More character required";
+        return false;
+    
+        }
+        
+        messageError.innerHTML =  '<i class="fas fa-check-circle" ></i>'
+    
+    }
+
+    
+    function validateform(){
+            if(!validatename() || !validatephone() || !validateemail() || !validatemessage())
+            {
+                submitError.innerHTML =" Please full-fill all the option"
+            }
+        }
+  </script>
+   
+</body>
+</html>
